@@ -114,7 +114,7 @@
         {
           title: 'Resultado',
           icon: 'mdi-calculator-variant-outline',
-          to: '/tables/regular-tables',
+          to: '/transactions/result',
         },
       ],
     }),

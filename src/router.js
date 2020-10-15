@@ -28,6 +28,11 @@ export default new Router({
           path: 'transactions/create',
           component: () => import('@/views/transactions/movements/movement-list'),
         },
+        {
+          name: 'Resultados',
+          path: 'transactions/result',
+          component: () => import('@/views/result/movement-result'),
+        },
       ],
     },
   ],
