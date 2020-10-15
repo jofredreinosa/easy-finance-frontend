@@ -107,9 +107,9 @@
           to: '/transactions/types',
         },
         {
-          title: 'Transacciones',
+          title: 'Movimientos',
           icon: 'mdi-notebook-edit-outline',
-          to: '/tables/regular-tables',
+          to: '/transactions/create',
         },
         {
           title: 'Resultado',

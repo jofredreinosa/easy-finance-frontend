@@ -19,9 +19,14 @@ export default new Router({
         },
         // Pages
         {
-          name: 'Types',
+          name: 'Tipos de Transacción',
           path: 'transactions/types',
           component: () => import('@/views/transactions/transactionTypes/transactionTypes-list'),
+        },
+        {
+          name: 'Movimientos',
+          path: 'transactions/create',
+          component: () => import('@/views/transactions/movements/movement-list'),
         },
       ],
     },

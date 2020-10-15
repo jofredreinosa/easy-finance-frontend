@@ -6,7 +6,7 @@
     >
       <base-material-card
         icon=""
-        title="Tipos de Transacción"
+        title="Movimientos Financieros"
       >
         <v-tooltip left>
           <template v-slot:activator="{ on, attrs }">
@@ -39,27 +39,12 @@
         <v-data-table
           dense
           :headers="headers"
-          :items="transactionTypes"
+          :items="movements"
           :search="search"
           :loading="loading"
           height="220px"
           class="mt-5"
         >
-          <template v-slot:item.operationtype="{ item }">
-            <span
-              v-show="item.operationtype == 'I'"
-              class="text-blue"
-            >
-              ENTRADA (+)
-            </span>
-            <span
-              v-show="item.operationtype == 'E'"
-              class="text-red"
-            >
-              SALIDA (-)
-            </span>
-          </template>
-
           <template
             v-slot:item.actions="{ item }"
           >
@@ -106,10 +91,11 @@
       </v-snackbar>
     </v-container>
 
-    <transactiontypecreateoredit
-      ref="transactiontypecreateoredit"
+    <movement
+      ref="movement"
       @loadInitialData="loadInitialData"
     />
+
     <confirm
       ref="confirm"
     />
@@ -120,13 +106,13 @@
   import config from '../../../config.json'
   import axios from 'axios'
   import confirm from '../../shared/ConfirmDialog'
-  import transactiontypecreateoredit from './transactionTypes-createOrEdit'
+  import movement from './Movement'
 
   export default {
-    name: 'TransactionTypesList',
+    name: 'MovementList',
 
     components: {
-      transactiontypecreateoredit,
+      movement,
       confirm,
     },
 
@@ -138,7 +124,7 @@
           to: '/',
         },
         {
-          text: 'Listado de Tipos de Transacción',
+          text: 'Listado de Movimientos',
           disabled: true,
           to: '',
         },
@@ -146,19 +132,22 @@
       search: '',
       headers: [
         {
-          text: 'Código', align: 'start', sortable: true, value: 'codetype',
+          text: 'Tipo de Transacción', align: 'start', sortable: true, value: 'transactiontypes.desctype',
         },
         {
-          text: 'Descripción', align: 'start', sortable: true, value: 'desctype',
+          text: 'Fecha', align: 'start', sortable: true, value: 'transactiondate',
         },
         {
-          text: 'Tipo de operación', align: 'start', sortable: true, value: 'operationtype',
+          text: 'Número transacción', align: 'start', sortable: true, value: 'transactionnumber',
+        },
+        {
+          text: 'Monto transacción', align: 'end', sortable: true, value: 'transactionamount',
         },
         {
           text: 'Acciones', align: 'center', sortable: false, value: 'actions',
         },
       ],
-      transactionTypes: [],
+      movements: [],
       loading: false,
       snackShow: false,
       snackText: '',
@@ -173,12 +162,10 @@
     methods: {
 
       loadInitialData () {
-        const url = config.API_ENDPOINT + 'transactiontype'
+        const url = config.API_ENDPOINT + 'movement'
         this.loading = true
         axios.get(url).then((result) => {
-          if (result.data) {
-            this.transactionTypes = result.data.data
-          }
+          this.movements = result.data.data
         }).catch((error) => {
           this.loading = false
           this.snackText = error
@@ -188,18 +175,17 @@
       },
 
       createItem () {
-        this.$refs.transactiontypecreateoredit.show()
+        this.$refs.movement.show()
       },
 
       editItem (rowData) {
-        const item = rowData
-        this.$refs.transactiontypecreateoredit.show(item)
+        this.$refs.movement.show(rowData)
       },
 
       async deleteItem (rowData) {
         const message = {
-          title: '¿Seguro de Eliminar el tipo de transacción?',
-          subtitle: rowData.codetype + ' - ' + rowData.desctype,
+          title: '¿Seguro de Eliminar el movimiento?',
+          subtitle: rowData.transactionnumber + ' por un monto de ' + rowData.transactionamount,
         }
         if (await this.$refs.confirm.open('Eliminar', message, { color: 'error', confirmText: 'Si, eliminar', cancelText: 'No, cerrar' })) {
           const url = config.API_ENDPOINT + 'transactiontype/' + rowData.id
