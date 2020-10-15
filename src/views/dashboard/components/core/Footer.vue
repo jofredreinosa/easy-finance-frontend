@@ -14,7 +14,7 @@
           <div class="body-1 font-weight-light pt-6 pt-md-0 text-center">
             &copy; 2020, Easy Finance
             <v-icon size="18">
-              mdi-file-document-edit-outline
+              mdi-cash-usd-outline
             </v-icon>
           </div>
         </v-col>
