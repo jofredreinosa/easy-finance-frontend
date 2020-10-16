@@ -46,7 +46,8 @@
 
     methods: {
       loadDataMovements () {
-        const url = config.API_ENDPOINT + 'result'
+        const param = null
+        const url = config.API_ENDPOINT + 'result/' + param + '/' + param
         this.loading = true
         axios.get(url).then((result) => {
           this.calculateBalance(result.data.data)
@@ -59,13 +60,10 @@
       },
 
       calculateBalance (data) {
-        const balance = data.reduce((previous, current) => {
-          if (current.operationtype === 'I') {
-            return parseFloat(previous.total) + parseFloat(current.total)
-          }
-          if (current.operationtype === 'E') {
-            return parseFloat(previous.total) + (parseFloat(current.total) * -1)
-          }
+        let balance = 0
+        data.forEach(movement => {
+          const value = movement.operationtype === 'I' ? parseFloat(movement.total) : parseFloat(movement.total) * -1
+          balance += value
         })
 
         this.subIcon = balance < 0 ? 'mdi-cash-remove' : 'mdi-cash-check'
