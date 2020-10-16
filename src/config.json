@@ -1,6 +1,6 @@
 {
   "production": false,
-  "API_ENDPOINT": "http://localhost:8000/api/",
+  "API_ENDPOINT": "https://morning-citadel-52333.herokuapp.com/api/",
   "API_LOCAL": "http://localhost:8000/api/",
   "API_REMOTE": "https://morning-citadel-52333.herokuapp.com/api/"
 }
