@@ -26,7 +26,7 @@
               </v-icon>
             </v-btn>
           </template>
-          <span>Nuevo Tipo de Transacción</span>
+          <span>Crear movimiento</span>
         </v-tooltip>
 
         <v-text-field
