@@ -163,7 +163,7 @@
       snackShow: false,
       snackText: '',
       snackColor: '',
-      snackTimeOut: 2500,
+      snackTimeOut: 4500,
     }),
 
     mounted () {
@@ -217,7 +217,7 @@
             }
           }).catch((error) => {
             this.loading = false
-            this.snackText = error
+            this.snackText = error.response.data.message
             this.snackColor = 'error'
             this.snackShow = true
           }).finally(() => { this.loading = false })

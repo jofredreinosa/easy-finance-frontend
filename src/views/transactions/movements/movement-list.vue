@@ -188,7 +188,7 @@
           subtitle: rowData.transactionnumber + ' por un monto de ' + rowData.transactionamount,
         }
         if (await this.$refs.confirm.open('Eliminar', message, { color: 'error', confirmText: 'Si, eliminar', cancelText: 'No, cerrar' })) {
-          const url = config.API_ENDPOINT + 'transactiontype/' + rowData.id
+          const url = config.API_ENDPOINT + 'movement/' + rowData.id
           this.loading = true
           axios.delete(url).then((result) => {
             if (result) {

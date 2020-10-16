@@ -72,7 +72,7 @@
 
         this.subText = balance < 0 ? 'Balance Negativo' : 'Balance Positivo'
 
-        this.balance = new Intl.NumberFormat().format(balance)
+        this.balance = '$' + new Intl.NumberFormat().format(balance)
       },
 
     },
